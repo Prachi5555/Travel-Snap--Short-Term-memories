@@ -193,23 +193,45 @@ export const deleteGrievance = async (req, res, next) => {
 }
 
 // Handle image upload for grievances
-export const imageUpload = (req, res) => {
+// export const imageUpload = (req, res) => {
+//   try {
+//     if (!req.file) {
+//       return res.status(400).json({ message: "No image file provided" })
+//     }
+
+//     // Create full URL for the image including the backend domain
+//     const baseUrl = process.env.NODE_ENV === 'production' 
+//       ? 'https://travelsnapbackend.onrender.com' 
+//       : 'http://localhost:5000';
+    
+//     const imageUrl = `${baseUrl}/uploads/${req.file.filename}`
+
+//     res.status(200).json({
+//       imageUrl,
+//       message: "Image uploaded successfully",
+//     })
+//   } catch (error) {
+//     res.status(500).json({ message: "Error uploading image" })
+//   }
+// }
+export const imageUpload = async (req, res, next) => {
   try {
     if (!req.file) {
-      return res.status(400).json({ message: "No image file provided" })
+      return next(errorHandler(400, "No image uploaded"));
     }
 
-    // Use the full path provided by req.file (same as travelStory.controller.js)
-    const imageUrl = req.file.path
+    // Multer-Cloudinary gives you the secure Cloudinary URL
+    const imageUrl = req.file.path;
 
-    res.status(200).json({
+    res.status(201).json({
       imageUrl,
-      message: "Image uploaded successfully",
-    })
+      message: "Image uploaded successfully!",
+    });
   } catch (error) {
-    res.status(500).json({ message: "Error uploading image" })
+    next(error);
   }
-}
+};
+
 
 // Delete an image
 export const deleteImage = (req, res) => {
