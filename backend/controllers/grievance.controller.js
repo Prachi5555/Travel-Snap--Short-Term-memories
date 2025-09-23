@@ -193,53 +193,23 @@ export const deleteGrievance = async (req, res, next) => {
 }
 
 // Handle image upload for grievances
-// export const imageUpload = (req, res) => {
-//   try {
-//     if (!req.file) {
-//       return res.status(400).json({ message: "No image file provided" })
-//     }
-
-//     // Create full URL for the image including the backend domain
-//     const baseUrl = process.env.NODE_ENV === 'production' 
-//       ? 'https://travelsnapbackend.onrender.com' 
-//       : 'http://localhost:5000';
-    
-//     const imageUrl = `${baseUrl}/uploads/${req.file.filename}`
-
-//     res.status(200).json({
-//       imageUrl,
-//       message: "Image uploaded successfully",
-//     })
-//   } catch (error) {
-//     res.status(500).json({ message: "Error uploading image" })
-//   }
-// }
-
-
-export const imageUpload = async (req, res) => {
+export const imageUpload = (req, res) => {
   try {
     if (!req.file) {
-      return res.status(400).json({ message: "No image file provided" });
+      return res.status(400).json({ message: "No image file provided" })
     }
 
-    // upload file to Cloudinary
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: "travel-diary-app", // optional folder in Cloudinary
-    });
+    // Use the full path provided by req.file (same as travelStory.controller.js)
+    const imageUrl = req.file.path
 
-    // cleanup local temp file after upload
-    fs.unlinkSync(req.file.path);
-
-    return res.status(200).json({
-      imageUrl: result.secure_url, // ✅ always use HTTPS secure_url
-      publicId: result.public_id,  // useful for deleting later
+    res.status(200).json({
+      imageUrl,
       message: "Image uploaded successfully",
-    });
+    })
   } catch (error) {
-    console.error("Cloudinary upload error:", error);
-    return res.status(500).json({ message: "Error uploading image" });
+    res.status(500).json({ message: "Error uploading image" })
   }
-};
+}
 
 // Delete an image
 export const deleteImage = (req, res) => {
