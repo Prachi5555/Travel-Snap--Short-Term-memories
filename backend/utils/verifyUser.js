@@ -24,8 +24,7 @@ import jwt from "jsonwebtoken";
 import { errorHandler } from "./error.js";
 
 export const verifyToken = (req, res, next) => {
-  // Check for token in both possible cookie names for compatibility
-  const token = req.cookies.token || req.cookies.access_token;
+  const token = req.cookies.access_token;
 
   if (!token) {
     return next(errorHandler(401, "Unauthorized"));
