@@ -169,7 +169,7 @@ const Home = () => {
         handleClearSearch={handleClearSearch}
       />
 
-      <div className="container mx-auto py-10">
+      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-10">
         <FilterInfoTitle
           filterType={filterType}
           filterDate={dateRange}
@@ -178,10 +178,10 @@ const Home = () => {
           }}
         />
 
-        <div className="flex gap-7">
-          <div className="flex-1">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-7">
+          <div className="flex-1 order-2 lg:order-1">
             {allStories.length > 0 ? (
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {allStories.map((item) => {
                   return (
                     <TravelStoryCard
@@ -216,7 +216,7 @@ const Home = () => {
             )}
           </div>
 
-          <div className="w-[320px]">
+          <div className="w-full lg:w-[320px] order-1 lg:order-2 mb-4 lg:mb-0">
             <div className="bg-white border border-slate-200 shadow-lg shadow-slate-200/60 rounded-lg">
               <div className="p-3">
                 <DayPicker
@@ -243,7 +243,7 @@ const Home = () => {
           },
         }}
         appElement={document.getElementById("root")}
-        className="w-[80vw] md:w-[40%] h-[80vh] bg-white rounded-lg mx-auto mt-14 p-5 overflow-y-scroll scrollbar z-50"
+        className="w-[95vw] sm:w-[80vw] md:w-[60%] lg:w-[40%] h-[80vh] bg-white rounded-lg mx-auto mt-4 sm:mt-8 md:mt-14 p-3 sm:p-5 overflow-y-scroll scrollbar z-50"
       >
         <AddEditTravelStory
           storyInfo={openAddEditModal.data}
@@ -266,7 +266,7 @@ const Home = () => {
           },
         }}
         appElement={document.getElementById("root")}
-        className="w-[80vw] md:w-[40%] h-[80vh] bg-white rounded-lg mx-auto mt-14 p-5 overflow-y-scroll scrollbar z-50"
+        className="w-[95vw] sm:w-[80vw] md:w-[60%] lg:w-[40%] h-[80vh] bg-white rounded-lg mx-auto mt-4 sm:mt-8 md:mt-14 p-3 sm:p-5 overflow-y-scroll scrollbar z-50"
       >
         <ViewTravelStory
           storyInfo={openViewModal.data || null}
@@ -284,12 +284,12 @@ const Home = () => {
       </Modal>
 
       <button
-        className="w-16 h-16 flex items-center justify-center rounded-full bg-[#05b6d3] hover:bg-cyan-400 fixed right-10 bottom-10"
+        className="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center rounded-full bg-[#05b6d3] hover:bg-cyan-400 fixed right-4 sm:right-10 bottom-4 sm:bottom-10 shadow-lg"
         onClick={() => {
           setOpenAddEditModal({ isShown: true, type: "add", data: null })
         }}
       >
-        <IoMdAdd className="text-[32px] text-white" />
+        <IoMdAdd className="text-2xl sm:text-[32px] text-white" />
       </button>
 
       <ToastContainer />

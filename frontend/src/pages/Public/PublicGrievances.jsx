@@ -35,28 +35,28 @@ const PublicGrievances = () => {
   return (
     <>
       <PublicNavbar />
-      <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Public Grievances</h1>
+      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
+      <div className="flex justify-between items-center mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">Public Grievances</h1>
       </div>
 
       {loading ? (
-        <div className="text-center py-8">
+        <div className="text-center py-4 sm:py-8">
           <p>Loading approved grievances...</p>
         </div>
       ) : approvedGrievances.length === 0 ? (
-        <div className="text-center py-8">
+        <div className="text-center py-4 sm:py-8">
           <p>No approved grievances found.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {approvedGrievances.map((grievance) => (
             <div
               key={grievance._id}
               className="bg-white rounded-lg shadow-md overflow-hidden"
             >
               {grievance.imageUrl && (
-                <div className="h-48 overflow-hidden">
+                <div className="h-40 sm:h-48 overflow-hidden">
                   <img
                     src={grievance.imageUrl}
                     alt={grievance.title}
@@ -64,16 +64,16 @@ const PublicGrievances = () => {
                   />
                 </div>
               )}
-              <div className="p-4">
-                <h2 className="text-xl font-semibold mb-2">{grievance.title}</h2>
-                <p className="text-gray-600 mb-3">{grievance.description}</p>
-                <div className="flex items-center text-gray-500 mb-2">
-                  <MdLocationOn className="mr-1" />
-                  <span>{grievance.location}</span>
+              <div className="p-3 sm:p-4">
+                <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 line-clamp-1">{grievance.title}</h2>
+                <p className="text-gray-600 mb-2 sm:mb-3 text-sm sm:text-base line-clamp-2">{grievance.description}</p>
+                <div className="flex items-center text-gray-500 mb-1 sm:mb-2 text-xs sm:text-sm">
+                  <MdLocationOn className="mr-1 flex-shrink-0" />
+                  <span className="truncate">{grievance.location}</span>
                 </div>
-                <div className="flex justify-between items-center text-sm text-gray-500">
-                  <span>Posted by: {grievance.userId?.username || "Anonymous"}</span>
-                  <span>
+                <div className="flex justify-between items-center text-xs sm:text-sm text-gray-500">
+                  <span className="truncate mr-2">Posted by: {grievance.userId?.username || "Anonymous"}</span>
+                  <span className="flex-shrink-0">
                     {moment(grievance.createdAt).format("MMM D, YYYY")}
                   </span>
                 </div>

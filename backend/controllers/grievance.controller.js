@@ -314,3 +314,4 @@ export const getApprovedGrievances = async (req, res, next) => {
     next(error)
   }
 }
+

@@ -69,24 +69,24 @@ const SignUp = () => {
 
   return (
     <div className="h-screen bg-cyan-50 overflow-hidden relative">
-      <div className="login-ui-box right-10 -top-40" />
+      <div className="login-ui-box right-10 -top-40 hidden sm:block" />
 
-      <div className="container h-screen flex items-center justify-center px-20 mx-auto">
-        <div className="w-2/4 h-[90vh] flex items-end bg-[url('https://images.pexels.com/photos/731217/pexels-photo-731217.jpeg?auto=compress&cs=tinysrgb&w=600')] bg-cover bg-center rounded-lg p-10 z-50">
+      <div className="container h-screen flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 md:px-10 lg:px-20 mx-auto">
+        <div className="hidden md:flex md:w-1/2 h-[90vh] items-end bg-[url('https://images.pexels.com/photos/731217/pexels-photo-731217.jpeg?auto=compress&cs=tinysrgb&w=600')] bg-cover bg-center rounded-lg p-6 lg:p-10 z-50">
           <div>
-            <h4 className="text-5xl text-white font-semibold leading-[58px]">
+            <h4 className="text-3xl lg:text-5xl text-white font-semibold leading-tight lg:leading-[58px]">
               Create Your <br /> Travel Stories
             </h4>
 
-            <p className="text-[15px] text-white leading-6 pr-7 mt-4">
+            <p className="text-sm lg:text-[15px] text-white leading-6 pr-4 lg:pr-7 mt-4">
               Record your travel experiences and memories in your travel journey
             </p>
           </div>
         </div>
 
-        <div className="w-2/4 h-[75vh] bg-white rounded-r-lg relative p-16 shadow-lg shadow-cyan-200/20">
+        <div className="w-full md:w-1/2 h-auto md:h-[75vh] bg-white rounded-lg md:rounded-l-none md:rounded-r-lg relative p-6 sm:p-8 md:p-10 lg:p-16 shadow-lg shadow-cyan-200/20">
           <form onSubmit={handleSignUp}>
-            <h4 className="text-2xl font-semibold mb-7">Create Your Account</h4>
+            <h4 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-7">Create Your Account</h4>
 
             <input
               type="text"
@@ -114,29 +114,29 @@ const SignUp = () => {
             {error && <p className="text-red-500 text-xs pb-1">{error}</p>}
 
             {loading ? (
-              <p className="animate-pulse w-full text-center btn-primary">
+              <p className="animate-pulse w-full text-center btn-primary text-sm sm:text-base">
                 LOADING...
               </p>
             ) : (
-              <button type="submit" className="btn-primary">
+              <button type="submit" className="btn-primary text-sm sm:text-base">
                 SIGN UP
               </button>
             )}
 
-            <p className="text-xs text-slate-500 text-center my-4">Or</p>
+            <p className="text-xs text-slate-500 text-center my-3 sm:my-4">Or</p>
 
             <button
               type="submit"
-              className="btn-primary btn-light"
+              className="btn-primary btn-light text-sm sm:text-base"
               onClick={() => navigate("/login")}
             >
               LOGIN
             </button>
             
-            <p className="text-xs text-slate-500 text-center mt-6 mb-2">Want to see public grievances?</p>
+            <p className="text-xs text-slate-500 text-center mt-4 sm:mt-6 mb-2">Want to see public grievances?</p>
             <button
               type="button"
-              className="btn-primary btn-light bg-blue-50 text-blue-600 hover:bg-blue-100"
+              className="btn-primary btn-light bg-blue-50 text-blue-600 hover:bg-blue-100 text-xs sm:text-sm"
               onClick={() => navigate("/public")}
             >
               VIEW PUBLIC GRIEVANCES
