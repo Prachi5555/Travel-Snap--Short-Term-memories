@@ -199,7 +199,12 @@ export const imageUpload = (req, res) => {
       return res.status(400).json({ message: "No image file provided" })
     }
 
-    const imageUrl = `/uploads/${req.file.filename}`
+    // Create full URL for the image including the backend domain
+    const baseUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://travelsnapbackend.onrender.com' 
+      : 'http://localhost:5000';
+    
+    const imageUrl = `${baseUrl}/uploads/${req.file.filename}`
 
     res.status(200).json({
       imageUrl,
