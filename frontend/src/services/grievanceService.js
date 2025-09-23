@@ -272,6 +272,7 @@ const grievanceService = {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          withCredentials: true, // Ensure cookies are sent with the request
         }
       );
       return response.data;
