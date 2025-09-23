@@ -49,6 +49,11 @@ const Login = () => {
       })
 
       if (response.data) {
+        // Store token in localStorage as fallback authentication method
+        if (response.data.token) {
+          localStorage.setItem('auth_token', response.data.token);
+        }
+        
         dispatch(signInSuccess(response.data))
         navigate("/")
       } else {

@@ -163,6 +163,8 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,                  // allow cookies/auth
     exposedHeaders: ['set-cookie'],     // allow frontend to read cookies
+    sameSite: 'none',                   // allow cross-site cookies
+    secure: true                        // only send cookies over HTTPS
   })
 );
 

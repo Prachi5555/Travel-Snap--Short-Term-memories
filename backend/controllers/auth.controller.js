@@ -177,7 +177,7 @@ export const signin = async (req, res, next) => {
       { expiresIn: "7d" }
     );
 
-    // remove password before sending
+    // Store token in localStorage for fallback auth
     const { password: pass, ...rest } = validUser._doc;
 
     // send cookie + user data
@@ -185,10 +185,12 @@ export const signin = async (req, res, next) => {
       .status(200)
       .cookie("access_token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // secure cookie in prod
-        sameSite: "strict",
+        secure: true, // always use secure cookies for cross-domain
+        sameSite: "none", // allow cross-site cookies
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+        domain: process.env.NODE_ENV === "production" ? ".onrender.com" : undefined, // shared domain for subdomains
       })
-      .json(rest);
+      .json({...rest, token}); // Include token in response for localStorage storage
   } catch (error) {
     next(error);
   }
