@@ -132,6 +132,15 @@ const SignUp = () => {
             >
               LOGIN
             </button>
+            
+            <p className="text-xs text-slate-500 text-center mt-6 mb-2">Want to see public grievances?</p>
+            <button
+              type="button"
+              className="btn-primary btn-light bg-blue-50 text-blue-600 hover:bg-blue-100"
+              onClick={() => navigate("/public")}
+            >
+              VIEW PUBLIC GRIEVANCES
+            </button>
           </form>
         </div>
       </div>

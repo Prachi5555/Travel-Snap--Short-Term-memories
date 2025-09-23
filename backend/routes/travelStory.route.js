@@ -15,7 +15,12 @@ import upload from "../multer.js"
 
 const router = express.Router()
 
-router.post("/image-upload", upload.single("image"), imageUpload)
+router.post("/image-upload", upload.single("image"), (req, res, next) => {
+  if (!req.file) {
+    return res.status(400).json({ error: "File upload failed" });
+  }
+  return imageUpload(req, res, next);
+})
 
 router.delete("/delete-image", deleteImage)
 

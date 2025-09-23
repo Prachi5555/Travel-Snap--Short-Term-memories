@@ -9,6 +9,7 @@ import {
   signInStart,
   signInSuccess,
 } from "../../redux/slice/userSlice"
+import { FaLock } from "react-icons/fa"
 
 const Login = () => {
   const navigate = useNavigate()
@@ -16,6 +17,8 @@ const Login = () => {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [adminKey, setAdminKey] = useState("")
+  const [showAdminKeyField, setShowAdminKeyField] = useState(false)
   const [error, setError] = useState("")
 
   const { loading, currentUser } = useSelector((state) => state.user)
@@ -42,6 +45,7 @@ const Login = () => {
       const response = await axiosInstance.post("/auth/signin", {
         email,
         password,
+        adminKey: showAdminKeyField ? adminKey : undefined,
       })
 
       if (response.data) {
@@ -106,6 +110,31 @@ const Login = () => {
                 setPassword(e.target.value)
               }}
             />
+            
+            <div className="flex items-center mb-3">
+              <input
+                type="checkbox"
+                id="adminLogin"
+                className="mr-2"
+                checked={showAdminKeyField}
+                onChange={() => setShowAdminKeyField(!showAdminKeyField)}
+              />
+              <label htmlFor="adminLogin" className="text-sm text-gray-600 flex items-center cursor-pointer">
+                <FaLock className="mr-1" /> Admin Login
+              </label>
+            </div>
+            
+            {showAdminKeyField && (
+              <div className="mb-3">
+                <input
+                  type="password"
+                  placeholder="Admin Key"
+                  className="input-box"
+                  value={adminKey}
+                  onChange={(e) => setAdminKey(e.target.value)}
+                />
+              </div>
+            )}
 
             {error && <p className="text-red-500 text-xs pb-1">{error}</p>}
 
@@ -127,6 +156,15 @@ const Login = () => {
               onClick={() => navigate("/sign-up")}
             >
               CREATE ACCOUNT
+            </button>
+            
+            <p className="text-xs text-slate-500 text-center mt-6 mb-2">Want to see public grievances?</p>
+            <button
+              type="button"
+              className="btn-primary btn-light bg-blue-50 text-blue-600 hover:bg-blue-100"
+              onClick={() => navigate("/public")}
+            >
+              VIEW PUBLIC GRIEVANCES
             </button>
           </form>
         </div>

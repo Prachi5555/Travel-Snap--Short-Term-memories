@@ -58,7 +58,8 @@ export const imageUpload = async (req, res, next) => {
       return next(errorHandler(400, "No image uploaded"))
     }
 
-    const imageUrl = `http://localhost:3000/uploads/${req.file.filename}`
+    // Cloudinary already processed the file, we can use the path from req.file
+    const imageUrl = req.file.path
 
     res.status(201).json({ imageUrl })
   } catch (error) {
@@ -79,21 +80,20 @@ export const deleteImage = async (req, res, next) => {
   }
 
   try {
-    // extract the file name from the imageUrl
-    const filename = path.basename(imageUrl)
+    // Extract the public_id from the Cloudinary URL
+    // URL format: https://res.cloudinary.com/cloud_name/image/upload/v1234567890/folder/filename.ext
+    const urlParts = imageUrl.split('/')
+    const filenameWithExtension = urlParts[urlParts.length - 1]
+    const folderName = urlParts[urlParts.length - 2]
+    const public_id = `${folderName}/${filenameWithExtension.split('.')[0]}`
 
-    // Delete the file path
-    const filePath = path.join(rootDir, "uploads", filename)
+    // Delete the image from Cloudinary
+    const { cloudinary } = await import('../multer.js')
+    const result = await cloudinary.uploader.destroy(public_id)
 
-    console.log(filePath)
-
-    // check if the file exists
-    if (!fs.existsSync(filePath)) {
-      return next(errorHandler(404, "Image not found!"))
+    if (result.result !== 'ok') {
+      return next(errorHandler(500, "Failed to delete image from Cloudinary"))
     }
-
-    // delete the file
-    await fs.promises.unlink(filePath)
 
     res.status(200).json({ message: "Image deleted successfully!" })
   } catch (error) {
@@ -121,7 +121,8 @@ export const editTravelStory = async (req, res, next) => {
       next(errorHandler(404, "Travel Story not found!"))
     }
 
-    const placeholderImageUrl = `http://localhost:3000/assets/placeholderImage.png`
+    const PORT = process.env.PORT || 5000
+    const placeholderImageUrl = `http://localhost:${PORT}/assets/placeholderImage.png`
 
     travelStory.title = title
     travelStory.story = story
@@ -155,7 +156,8 @@ export const deleteTravelStory = async (req, res, next) => {
     await travelStory.deleteOne({ _id: id, userId: userId })
 
     // Check if the image is not a placeholder before deleting
-    const placeholderImageUrl = `http://localhost:3000/assets/placeholderImage.png`
+    const PORT = process.env.PORT || 5000
+    const placeholderImageUrl = `http://localhost:${PORT}/assets/placeholderImage.png`
 
     // Extract the filename from the imageUrl
     const imageUrl = travelStory.imageUrl
