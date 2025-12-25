@@ -231,4 +231,4 @@ The application supports admin authentication using an admin key. Admins have ad
 - **Endpoint:** `PUT /travelSnap/admin/approve/:id`
 - **Description:** Toggles the approval status of a travel snap for display on the main page.
 
-Updated by Prachi Negi
+Updated by Prachi
